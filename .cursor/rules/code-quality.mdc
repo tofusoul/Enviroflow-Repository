@@ -1,0 +1,83 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Code Quality Standards
+
+## Type Annotations & Pyright Configuration
+
+### Logger Configuration
+When configuring loguru logger, use the following pattern to avoid type warnings:
+```python
+from typing import Any, cast
+
+_ = logger.configure(**cast("dict[str, Any]", config.APP_LOG_CONF))
+```
+
+### Unused Call Results
+Assign unused function results to `_` to suppress warnings:
+```python
+_ = pre.setup_streamlit_page()
+_ = st.toggle("toggle Dev Mode", key="dev")
+```
+
+### Type Casting
+Use modern Python type syntax (Python 3.9+):
+```python
+# Good
+cast("dict[str, Any]", config.APP_LOG_CONF)
+
+# Avoid deprecated typing imports
+# from typing import Dict  # deprecated
+```
+
+## Import Organization
+Follow this import order:
+1. Standard library imports
+2. Third-party imports
+3. Local application imports
+
+```python
+import random
+from typing import Any, cast
+
+import polars as pl
+import streamlit as st
+from loguru import logger
+
+from enviroflow_app import config
+from enviroflow_app.model import Project
+```
+
+## Function Documentation
+All public functions should have proper docstrings:
+```python
+def check_project(project: Project) -> None:
+    """Render the project details.
+
+    Args:
+        project: The project object to display details for.
+
+    """
+```
+
+## Variable Naming
+- Avoid generic names like `df` for DataFrames
+- Use descriptive names: `projects_table` instead of `df`
+- Avoid variable name conflicts (redeclaration warnings)
+
+## Pyright Configuration
+The project uses basedpyright with the following suppressions in [pyproject.toml](mdc:pyproject.toml):
+- `reportPrivateLocalImportUsage = "none"`
+- `reportUnusedCallResult = "none"`
+- `reportAny = "none"`
+- `reportExplicitAny = "none"`
+- `reportUnknownMemberType = "none"`
+- `reportUnnecessaryComparison = "none"`
+- `reportRedeclaration = "none"`
+
+## Streamlit Best Practices
+- Assign Streamlit component results to `_` when unused
+- Use proper type annotations for session state variables
+- Handle dynamic typing for Streamlit components appropriately

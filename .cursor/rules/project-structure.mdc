@@ -1,0 +1,73 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Enviroflow App Project Structure
+
+## Core Architecture
+
+### Main Application
+The primary Streamlit application is located in [enviroflow_app/](mdc:enviroflow_app) with the main entry point being [🏠_Home.py](mdc:enviroflow_app/🏠_Home.py).
+
+### Data Pipeline (ELT)
+The Extract-Load-Transform pipeline is implemented in [enviroflow_app/elt/](mdc:enviroflow_app/elt):
+- **MotherDuck Integration**: [enviroflow_app/elt/motherduck/](mdc:enviroflow_app/elt/motherduck)
+- **Data Transformations**: [enviroflow_app/elt/transform/](mdc:enviroflow_app/elt/transform)
+- **Trello Integration**: [enviroflow_app/elt/trello/](mdc:enviroflow_app/elt/trello)
+
+### Data Models
+Core data models are defined in [enviroflow_app/model/](mdc:enviroflow_app/model):
+- [Project](mdc:enviroflow_app/model/project.py) - Main project entity
+- [Job](mdc:enviroflow_app/model/job.py) - Job/work order entity
+- [Quote](mdc:enviroflow_app/model/quote.py) - Quote/estimate entity
+
+### Streamlit Pages
+Application pages are organized in [enviroflow_app/pages/](mdc:enviroflow_app/pages):
+- [5_💰_Project_Performance.py](mdc:enviroflow_app/pages/5_💰_Project_Performance.py) - Project performance analysis
+- [6_🚚_Data_Loading_ELT.py](mdc:enviroflow_app/pages/6_🚚_Data_Loading_ELT.py) - Data pipeline management
+- [7_🔮_Data_Explorer.py](mdc:enviroflow_app/pages/7_🔮_Data_Explorer.py) - Data exploration interface
+
+### Configuration
+Application configuration is centralized in [enviroflow_app/config.py](mdc:enviroflow_app/config.py) including:
+- Trello API configuration
+- Logger configurations for different components
+- Application-wide settings
+
+## Data Flow
+
+### Session State Management
+The application uses Streamlit session state for caching and state management:
+- Database connections (MotherDuck)
+- Trello API connections
+- Cached data frames and project objects
+- User interface state
+
+### Database Integration
+- **Primary Database**: MotherDuck (cloud DuckDB)
+- **Connection Management**: Through [enviroflow_app/elt/motherduck/md.py](mdc:enviroflow_app/elt/motherduck/md.py)
+- **Data Storage**: Polars DataFrames stored as tables
+
+### External Integrations
+- **Trello**: Project management and task tracking
+- **Xero**: Financial data and invoicing
+- **Float**: Resource scheduling
+- **Simpro**: Static data exports
+
+## Development Guidelines
+
+### Code Organization
+- Follow the established import patterns
+- Use type annotations consistently
+- Implement proper error handling
+- Document public functions and classes
+
+### Testing Strategy
+- Unit tests in [tests/](mdc:tests)
+- Integration tests for data pipeline components
+- Manual testing for Streamlit interfaces
+
+### Deployment
+- Streamlit Community Cloud deployment
+- Environment-specific configuration management
+- Secrets management through Streamlit Cloud

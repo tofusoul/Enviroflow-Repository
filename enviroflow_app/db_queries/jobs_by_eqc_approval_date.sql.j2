@@ -1,0 +1,45 @@
+-- list of jobs by eqc approval date. Make it into a jinja2 template where the eqc_approved_date is a variable
+SELECT
+  "name",
+  url,
+  report_by,
+  eqc_claim_manager,
+  status,
+  report_sent_to_eqc,
+  eqc_approved_date,
+  survey_completed_on,
+  c_quote_value
+from jobs_for_analytics
+where status in (
+  'NHC Approved - awaiting shared drain contact/approval',
+  'NHC Approved',
+  'Potential job for alternative drainlayer',
+  'Scheduled Work',
+  'In Dispute/ON HOLD',
+  'NHC Declined',
+  'Manager''s Approval To Close',
+  'Ready to Start',
+  'Ready To Invoice',
+  'Invoiced',
+  'Backlog/Delayed/Reschedule',
+  'Next Job - Customer Has Been Called',
+  'Upcoming',
+  'Current',
+  'Pipelining to finish',
+  'Concrete/Asphalt to finish',
+  'Zade jobs',
+  'Landy small Jobs',
+  'Rodolfo,  Small Jobs',
+  'Daves, Small Jobs',
+  'Small Jobs Complete - PMs to check',
+  'Andy - Completed Job: Check before invoice',
+  'Shea - Completed Job: Check before invoice',
+  'Brendan - Completed Job: Check before invoice',
+  'Book Final Sign Off Meeting',
+  'Book Final Sign Off Meeting',
+  'To Invoice',
+  'Send Invoice',
+  'Work Completed'
+  )
+AND eqc_approved_date >= '{{ eqc_approved_date }}'
+ORDER by report_sent_to_eqc DESC

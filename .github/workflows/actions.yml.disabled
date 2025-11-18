@@ -1,0 +1,68 @@
+# DISABLED: This workflow is no longer active
+# Date Disabled: September 16, 2025
+# Reason: Legacy sync_data.py script removed after CLI pipeline migration
+# Replacement: cli_pipeline.yml uses the new CLI system
+#
+# This file is kept for reference only and will not execute
+
+name: hourly sync data (DISABLED - see cli_pipeline.yml)
+on:
+  # Disabled - no triggers will activate this workflow
+  # workflow_dispatch:
+  # schedule:
+    # - cron: '0 9-17 * * 1-5' need to adjust to utc
+    # - cron: '30 20-23,0-4 * * 0-4'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repo conte nt
+        uses: actions/checkout@v3 #checks out the repo content
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.16'
+
+      - name: Install poetry
+        run: |
+          python -m pip install poetry
+
+      - name: Configure poetry
+        run: |
+          python -m poetry config virtualenvs.in-project true
+
+      - name: Cache the virtualenv
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: |
+          python -m poetry install
+      # - name: install python packages
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r requirements.txt
+      #
+#
+      - name: run the sync script
+        env:
+          GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          TRELLO_KEY: ${{ secrets.TRELLO_KEY }}
+          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          MOTHER_DUCK: ${{ secrets.MOTHER_DUCK }}
+        run: python -m poetry run python scripts/sync_data.py
+
+      - name: Update repo
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: update data from sources
+
+#      - name: run the update_db script
+#        env:
+#          FIREBASE: ${{ secrets.FIREBASE}}
+#        run: python -m poetry run python scripts/update_db.py

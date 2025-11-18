@@ -1,0 +1,47 @@
+[env]
+_.python.venv = ".venv"
+
+[tasks]
+
+# CLI Pipeline Commands
+cli = "python -m enviroflow_app.cli.main"
+pipeline = "python -m enviroflow_app.cli.main run-all"
+extract-all = "python -m enviroflow_app.cli.main extract trello && python -m enviroflow_app.cli.main extract float && python -m enviroflow_app.cli.main extract xero-costs && python -m enviroflow_app.cli.main extract sales && python -m enviroflow_app.cli.main extract legacy"
+transform-all = "python -m enviroflow_app.cli.main transform quotes && python -m enviroflow_app.cli.main transform jobs && python -m enviroflow_app.cli.main transform customers && python -m enviroflow_app.cli.main transform labour && python -m enviroflow_app.cli.main transform projects && python -m enviroflow_app.cli.main transform analytics"
+
+# Individual Extraction Commands
+extract-trello = "python -m enviroflow_app.cli.main extract trello"
+extract-float = "python -m enviroflow_app.cli.main extract float"
+extract-xero-costs = "python -m enviroflow_app.cli.main extract xero-costs"
+extract-sales = "python -m enviroflow_app.cli.main extract sales"
+extract-legacy = "python -m enviroflow_app.cli.main extract legacy"
+
+# Individual Transformation Commands
+transform-quotes = "python -m enviroflow_app.cli.main transform quotes"
+transform-jobs = "python -m enviroflow_app.cli.main transform jobs"
+transform-customers = "python -m enviroflow_app.cli.main transform customers"
+transform-labour = "python -m enviroflow_app.cli.main transform labour"
+transform-projects = "python -m enviroflow_app.cli.main transform projects"
+transform-analytics = "python -m enviroflow_app.cli.main transform analytics"
+
+# Load Commands
+load-local = "python -m enviroflow_app.cli.main load local-files"
+load-motherduck = "python -m enviroflow_app.cli.main load motherduck"
+
+# Code Quality Commands
+lint = "ruff check . --fix"
+typecheck = "basedpyright ."
+test = "pytest"
+test-integration = "pytest tests/integration/"
+
+# GitHub Actions Testing
+act-dryrun = "act -j run-cli-pipeline --dryrun"
+act-test = "act -j run-cli-pipeline"
+
+# Streamlit Development
+streamlit-home = "streamlit run enviroflow_app/🏠_Home.py"
+
+# Development Workflow Commands
+dev-setup = "poetry install && mise install"
+dev-check = "ruff check . --fix && basedpyright . && pytest"
+dev-status = "python -m enviroflow_app.cli.main status"

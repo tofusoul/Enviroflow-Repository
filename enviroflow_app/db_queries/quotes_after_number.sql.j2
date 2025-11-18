@@ -1,0 +1,4 @@
+-- make into a jinja2 template, where the quote number is a variable
+from quotes
+where quote_no > '{{ quote_no }}'
+order by quote_no asc

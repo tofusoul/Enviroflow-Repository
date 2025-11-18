@@ -1,0 +1,133 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Linting and Development Tools
+
+## Code Quality Tools
+
+### Ruff (Primary Linter)
+The project uses [Ruff](mdc:https:/docs.astral.sh/ruff) as the primary linting tool. Configuration is in [pyproject.toml](mdc:pyproject.toml).
+
+**Common Ruff Commands:**
+```bash
+# Check all files
+ruff check .
+
+# Auto-fix issues
+ruff check . --fix
+
+# Check specific file
+ruff check enviroflow_app/pages/5_💰_Project_Performance.py
+
+# Check with all rules
+ruff check . --select ALL
+```
+
+**Key Ruff Rules:**
+- `I001` - Import sorting and formatting
+- `E501` - Line length (88 characters)
+- `D100` - Missing module docstring
+- `ANN201` - Missing return type annotations
+- `COM812` - Missing trailing commas
+
+### BasedPyright (Type Checking)
+The project uses [BasedPyright](mdc:https:/github.com/basedpyright/basedpyright) for type checking, configured in [pyproject.toml](mdc:pyproject.toml).
+
+**Common BasedPyright Commands:**
+```bash
+# Check specific file
+basedpyright enviroflow_app/pages/5_💰_Project_Performance.py
+
+# Check entire project
+basedpyright .
+```
+
+**Suppressed Warnings:**
+- `reportPrivateLocalImportUsage` - Import path warnings
+- `reportUnusedCallResult` - Unused function results
+- `reportAny` - Any type usage
+- `reportExplicitAny` - Explicit Any type usage
+- `reportUnknownMemberType` - Unknown member types (common with Streamlit)
+- `reportUnnecessaryComparison` - Unnecessary type comparisons
+- `reportRedeclaration` - Variable redeclaration
+
+## Development Workflow
+
+### Pre-commit Checks
+Before committing code:
+1. Run `ruff check .` to ensure no linting errors
+2. Run `basedpyright .` to check for type issues
+3. Ensure all tests pass
+
+### Common Issues and Fixes
+
+#### Import Organization
+```python
+# Good
+import random
+from typing import Any, cast
+
+import polars as pl
+import streamlit as st
+from loguru import logger
+
+from enviroflow_app import config
+```
+
+#### Type Annotations
+```python
+# Good
+def check_project(project: Project) -> None:
+    """Render the project details."""
+```
+
+#### Unused Results
+```python
+# Good
+_ = logger.configure(**cast("dict[str, Any]", config.APP_LOG_CONF))
+_ = st.toggle("toggle Dev Mode", key="dev")
+```
+
+## File Naming Conventions
+
+### Streamlit Pages
+- Use emoji prefixes for page ordering: `5_💰_Project_Performance.py`
+- Include descriptive names after the emoji
+- Note: This triggers `N999` warning but is acceptable for Streamlit apps
+
+### Module Files
+- Use snake_case for Python modules
+- Include descriptive names that indicate purpose
+- Follow standard Python naming conventions
+
+## Configuration Files
+
+### pyproject.toml
+Central configuration file containing:
+- Poetry dependencies
+- Ruff linting rules
+- Pyright type checking settings
+- Pytest configuration
+
+### mypy.ini
+Legacy mypy configuration (minimal):
+```ini
+[mypy]
+plugins = tinydb.mypy_plugin
+```
+
+## IDE Integration
+
+### VS Code / Cursor
+- Install Python extension
+- Configure Ruff and BasedPyright as language servers
+- Enable auto-formatting on save
+- Use the integrated terminal for running linting commands
+
+### Recommended Extensions
+- Python (Microsoft)
+- Ruff (if available)
+- BasedPyright (if available)
+- GitLens for version control

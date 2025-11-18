@@ -1,0 +1,4 @@
+-- labour hours after a given date
+from labour_hours
+where start_date > DATE '{{ start_date }}'
+order by start_date asc

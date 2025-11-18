@@ -1,0 +1,53 @@
+# Pre-commit hooks to prevent credential commits and enforce code quality
+# See https://pre-commit.com for more information
+
+repos:
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000']  # Prevent files larger than 1MB
+      - id: check-merge-conflict
+      - id: detect-private-key
+        exclude: ^tests/
+
+  # Secret detection
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: |
+          (?x)^(
+            \.git/|
+            \.venv/|
+            \.pytest_cache/|
+            __pycache__/|
+            \.ipynb_checkpoints/|
+            poetry\.lock|
+            .*\.log|
+            .*\.pyc
+          )$
+
+  # Python code quality
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  # Prevent Data folder commits
+  - repo: local
+    hooks:
+      - id: block-data-folder
+        name: Block Data folder commits
+        entry: bash -c 'if git diff --cached --name-only | grep -q "^Data/"; then echo "ERROR Cannot commit files in Data/ folder. Data should be in separate repository."; exit 1; fi'
+        language: system
+        pass_filenames: false
+        stages:
+          - pre-commit

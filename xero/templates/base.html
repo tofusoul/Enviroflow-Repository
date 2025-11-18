@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if title %}{{ title }}{% else %}Welcome to Xero Python oauth starter{% endif %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static' , filename='images/Final+Enviroflo+Web+Colour.png') }}" alt="Enviroflow Logo" class="logo" width="150">
+            </a>
+            <h1 class = "subtitle mt-5"><strong>Data Server</strong> </h1>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start mt-2">
+                <a class= "navbar-item" href="{{ url_for('get_all_quotes') }}">Get All Quotes</a>
+                <a class= "navbar-item" href="{{ url_for('get_quotes') }}">Get Quotes</a>
+                <a class= "navbar-item" href="{{ url_for('get_invoices') }}">Invoices</a>
+                <a class= "navbar-item" href="{{ url_for('static', filename='plans.html') }}">App Roadmap</a>
+            </div>
+            <div class= "buttons has-addons">
+                <a class= "button is-small" href="{{ url_for('refresh_token') }}">Refresh Token</a>
+                <a class= "button is-small" href="{{ url_for('export_token') }}" >Export Token</a>
+                <a class= "button is-small" href="{{ url_for('index') }}" >Show Oauth token</a>
+            <div class="buttons">
+            <div class="navbar-end">
+                <div class="navbar-item">
+
+                        <a class="button is-primary" href="{{ url_for('login') }}"><strong>Xero Login</strong></a>
+                        <a class="button is-light" href="{{ url_for('logout') }}"><strong>Logout</strong></a>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+
+{% block content %}{% endblock %}
+<!--<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>-->
+</body>
+</html>

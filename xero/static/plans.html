@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>plans.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="enviroflow-app-roadmap">Enviroflow App Roadmap</h1>
+<h2 id="v01---initial-stable-state">V0.1 - Initial Stable State</h2>
+<ul>
+<li>Initial stable version delivering some basic functionality including:
+<ul>
+<li>fetch, clean and consolidate data into a queryable database for analysis</li>
+<li>basic interface for low hanging fruit features like:
+<ul>
+<li>generating the edited job scope list for the subcontractors</li>
+<li>get a list of what subcontractor quantities are needed for the upcoming job</li>
+</ul>
+</li>
+<li>test the robustness of the database on the basis of the small apps</li>
+</ul>
+</li>
+<li>Update Xero with simpro quotes</li>
+<li>Update Trello with quote quantities</li>
+<li>Update Xero with trello contacts</li>
+</ul>
+<h3 id="goals---prioritised">Goals - Prioritised</h3>
+<ul>
+<li>
+<p>Analyse, clean and combine the data sets from separate sources.</p>
+<ul>
+<li><input type="checkbox" id="checkbox0" checked="true"><label for="checkbox0">Create stable ways to get structured data from all relevant data sources</label>
+<ul>
+<li><input type="checkbox" id="checkbox1" checked="true"><label for="checkbox1">Simpro</label>
+<ul>
+<li><input type="checkbox" id="checkbox2" checked="true"><label for="checkbox2">Get everything we need out of simpro</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox3" checked="true"><label for="checkbox3">Xero</label>
+<ul>
+<li><input type="checkbox" id="checkbox4" checked="true"><label for="checkbox4">List of all quotes</label>
+<ul>
+<li><input type="checkbox" id="checkbox5" checked="true"><label for="checkbox5">Fetch quotes</label></li>
+<li><input type="checkbox" id="checkbox6" checked="true"><label for="checkbox6">Parse quotes</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Ways fetch updated quotes from Xero</label>
+<ul>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">fetch updated quotes</label></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox9" checked="true"><label for="checkbox9">Trello</label>
+<ul>
+<li><input type="checkbox" id="checkbox10" checked="true"><label for="checkbox10">Fetch Trello Cards</label></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">Get everything into typed data tables</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">Get everything into a database</label></li>
+</ul>
+</li>
+<li>
+<p><input type="checkbox" id="checkbox13"><label for="checkbox13">Update Xero with quote contents from Simpro</label></p>
+<ul>
+<li><input type="checkbox" id="checkbox14"><label for="checkbox14">figure out and create checks for pushing the simpro quotes up</label></li>
+</ul>
+</li>
+<li>
+<p><input type="checkbox" id="checkbox15"><label for="checkbox15">Get the Simpro info into Xero</label></p>
+</li>
+<li>
+<p><input type="checkbox" id="checkbox16"><label for="checkbox16">Get Xero info into Trello</label></p>
+</li>
+<li>
+<p><input type="checkbox" id="checkbox17"><label for="checkbox17">Get Trello Contacts into Xero</label></p>
+</li>
+</ul>
+<h3 id="milestone-mvps">Milestone, MVPs</h3>
+<ul>
+<li><input type="checkbox" id="checkbox18" checked="true"><label for="checkbox18">Extract Simpro data</label>
+<ul>
+<li><input type="checkbox" id="checkbox19" checked="true"><label for="checkbox19">Simpro Quotes from PDF</label></li>
+<li><input type="checkbox" id="checkbox20" checked="true"><label for="checkbox20">Simpro quote scrape status</label></li>
+<li><input type="checkbox" id="checkbox21" checked="true"><label for="checkbox21">Simpro Quote Status</label></li>
+<li><input type="checkbox" id="checkbox22" checked="true"><label for="checkbox22">Job Status in Simpro</label></li>
+<li><input type="checkbox" id="checkbox23" checked="true"><label for="checkbox23">Quote Activities</label></li>
+<li><input type="checkbox" id="checkbox24" checked="true"><label for="checkbox24">Invoices from Simpro</label></li>
+<li><input type="checkbox" id="checkbox25" checked="true"><label for="checkbox25">Simpro Xero log</label></li>
+<li><input type="checkbox" id="checkbox26" checked="true"><label for="checkbox26">Simpro Customers</label></li>
+<li><input type="checkbox" id="checkbox27" checked="true"><label for="checkbox27">Notes and update relevant to Simpro Info</label></li>
+<li><input type="checkbox" id="checkbox28" checked="true"><label for="checkbox28">Uninvoiced Jobs</label></li>
+<li><input type="checkbox" id="checkbox29" checked="true"><label for="checkbox29">Simpro Invoices</label></li>
+<li><input type="checkbox" id="checkbox30"><label for="checkbox30">Get data typed and queryable</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox31"><label for="checkbox31">Extract Xero data</label>
+<ul>
+<li><input type="checkbox" id="checkbox32"><label for="checkbox32">Oauth flow to access Xero Api</label></li>
+<li><input type="checkbox" id="checkbox33"><label for="checkbox33">fetch and parse quote data</label></li>
+<li><input type="checkbox" id="checkbox34"><label for="checkbox34">Organise the updates to the list of quotes so the output makes sense</label></li>
+<li><input type="checkbox" id="checkbox35"><label for="checkbox35">make some interfaces to organise fetching data</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox36"><label for="checkbox36">Extract Trello data</label>
+<ul>
+<li><input type="checkbox" id="checkbox37"><label for="checkbox37">Fetch and parse Trello cards</label></li>
+<li><input type="checkbox" id="checkbox38"><label for="checkbox38">Finalise some quality of life improvements to fetching the data in the jupyter notebook</label></li>
+</ul>
+</li>
+<li><input type="checkbox" id="checkbox39"><label for="checkbox39">Make some interfaces for tasks</label>
+<ul>
+<li><input type="checkbox" id="checkbox40"><label for="checkbox40">Generate the scope lists for subcontractors</label></li>
+<li><input type="checkbox" id="checkbox41"><label for="checkbox41">get a list of what subcontractor quantities are needed for the upcoming job</label></li>
+</ul>
+</li>
+<li>Flask server
+<ul>
+<li><input type="checkbox" id="checkbox42"><label for="checkbox42">Basic interface data</label>
+<ul>
+<li><input type="checkbox" id="checkbox43"><label for="checkbox43">Quotes</label></li>
+<li><input type="checkbox" id="checkbox44"><label for="checkbox44">Cost Journals</label></li>
+<li><input type="checkbox" id="checkbox45"><label for="checkbox45">Invoices</label></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Jupyter notebook prototypes for the Enviroflow App
+<ul>
+<li><input type="checkbox" id="checkbox46"><label for="checkbox46">Generate scope lists for subcontractors</label></li>
+<li><input type="checkbox" id="checkbox47"><label for="checkbox47">Get a list of what subcontractor quantities are needed for the upcoming job</label>
+<ul>
+<li><input type="checkbox" id="checkbox48"><label for="checkbox48">Pipe-lining</label></li>
+<li><input type="checkbox" id="checkbox49"><label for="checkbox49">Concrete</label></li>
+<li><input type="checkbox" id="checkbox50"><label for="checkbox50">Hydro-seed</label></li>
+<li><input type="checkbox" id="checkbox51"><label for="checkbox51">Asphalt</label></li>
+<li><input type="checkbox" id="checkbox52"><label for="checkbox52">Heatpump</label></li>
+<li><input type="checkbox" id="checkbox53"><label for="checkbox53">Fence</label></li>
+<li><input type="checkbox" id="checkbox54"><label for="checkbox54">Deck</label></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="dataflow">Dataflow</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    x[/Xero/]
+    t[/Trello/]
+    sp[/Simpro Data/]
+    ps[Python Server]
+    sl[Streamlit <br/> scripts]
+    nb[Jupyter Notebooks]
+    dl[(Google Drive<br/> Datalake)]
+    tu[Trello Update <br/> Script]
+    x --> ps
+    ps --> nb
+    t --> nb
+    sp --> nb
+    nb --> dl
+    dl --> nb
+    dl --> sl
+    dl --> ps
+    ps --> x
+    tu --> t
+    dl --> tu
+    nb --> sl
+</div></code></pre>
+<h2 id="v02">V0.2</h2>
+<h3 id="goal-mvp">Goal (MVP)</h3>
+<ul>
+<li>Create some simple interactivity and reports on the data.</li>
+<li>One way sync the Xero data into the Trello boards</li>
+</ul>
+<h4 id="dataflow">Dataflow</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    ps([Python Server])-->dl[(Google Drive<br/> Datalake)]
+    dl --> ps
+    x[Xero]--> ps
+    ps --> x
+    t[Trello] --> ps
+    sl[Streamlit <br/> script] --> dl
+    dl --> sl
+    sl --> t
+    sp[\Simpro\] --> dl
+
+
+</div></code></pre>
+<h4 id="python-server">Python Server</h4>
+<ul>
+<li>Simple flask server
+<ul>
+<li>in the future will serve up a json api</li>
+<li>right now it will just destructure the fetched data and generate the data frames we need and save it as CSV</li>
+</ul>
+</li>
+<li>Handles the o-auth flow with xero's API</li>
+<li>Grabs the needed data from xero and saves it as dataframes</li>
+<li>Grabs the data from Trello and saves it as dataframes</li>
+</ul>
+<h5 id="classes-on-the-python-server">Classes on the python server</h5>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Xero_Quote {
+            source_dict: dict
+            quote_id: str
+            quote_number : str
+            quote_ref: str
+            quote_contact_id: str
+            quote_contact_name: str
+            quote_contact_email: str
+            quote_status : str
+            quote_created: datetime
+            quote_updated: datetime
+            quote_total_ex_tax: str
+            quote_lines_dict: dict
+            quote_lines_df: pd.core.frame.DataFrame
+            quote_lines_df_human: pd.core.frame.DataFrame
+            error_list: list
+            get_quote_info(Xero_Quote) -> dict
+    }
+
+    class Xero_Quotes_List{
+
+
+    }
+    class XeroQuoteLookup {
+        quote_list: list
+        quote_list_df: pd.core.frame.DataFrame
+        quote_list_df_human: pd.core.frame.DataFrame
+        error_list: list
+        read_single_quote(dict) -> Xero_Quote
+        read_quotes_list(dict) -> Xero_Quotes_List
+        read_multiple_quotes(dict) -> Xero_Quotes_List
+    }
+
+    class XeroContacts {
+
+    }
+    class XeroInvoices {
+
+    }
+    class XeroCosts {
+
+    }
+
+    ScrapedSimproQuote
+    Simpro_Final_State
+    SimproContacts
+    Trello_Board *-- Trello_List
+    Trello_List *-- Trello_Card
+    Trello_Card *-- Trello_Contacts
+
+</div></code></pre>
+<h4 id="google-drive-datalake">Google Drive Datalake</h4>
+<ul>
+<li>Collection of tabular data that is saved to Google Drive</li>
+</ul>
+<h4 id="observable-scripts">Observable Scripts</h4>
+<ul>
+<li>Collection of observable hq scripts written in 'kind of' javascript</li>
+<li>can be exported into executable code.</li>
+<li><a href="https://observablehq.com/@cmudig/duckdb">duckdb on observable</a></li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<p>this design means that the front end and back end users can't simultaniously be accessing the data lake at the same time, it will mean overwriting the pool of data, but that isn't too hard to manage at the moment as there is only one back end user.</p>
+<p>should write something to prevent this from happening</p>
+<h2 id="v02">V0.2</h2>
+<h3 id="goal-mvp">Goal (MVP)</h3>
+<ul>
+<li>structure things so we can rapidly prototype and itterate what we do</li>
+</ul>
+<h4 id="dataflow">Dataflow</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    ps([Python Server])-->dl[(Google Drive<br/> Datalake)]
+    dl --> ps
+    x[Xero]--> ps
+    ps --> x
+    t[Trello] --> ps
+    o[Observable <br/> script] --> dl
+    dl --> o
+    o --> f
+    f[Float <br/> Schedueling ] --> ps
+    o --> t
+</div></code></pre>
+<h4 id="classes-on-the-python-server">Classes on the python server</h4>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    XeroQuote
+    XeroContacts
+    XeroInvoices
+    SimproQuote
+    SimproContacts
+    Trello_Board *-- Trello_List
+    Trello_List *-- Trello_Card
+    Trello_Card *-- Trello_Contacts
+
+</div></code></pre>
+<h4 id="backend-sequence">Backend Sequence</h4>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant bu as backend user
+    participant t as Trello
+    participant x as Xero
+    participant ps as Python <br/> Server
+    participant dl as Google drive <br/> Data Lake
+    bu ->> ps : Starts Python Server
+    activate ps
+    ps ->> ps: generates a log dataframe <br/> for the session
+    ps->> x  : Authentication <br/> reuqests
+    Note left of ps : Simplification of <br/> xerooauth flow
+    x -->>ps : Authentication <br/> response
+    ps->> x  : API requests <br/> to get <br/> data from Xero
+    x -->>ps : API response <br/> with data from Xero
+    ps->> t  : API requests <br/> to get <br/> data from Trello
+    t -->> ps  : API response <br/> with data from Trello
+    ps ->> ps : unwrapping recieved <br/> json data to put <br />into pandas dataframes
+    dl ->> ps : fetch CSV data from <br/> data lake
+    ps->> ps : Compares <br/> data sets <br/> for the difference
+    ps->> ps : update session log <br/> a report <br/> on the data
+    ps-->> bu : shows difference to <br/> user
+    deactivate ps
+    bu->> ps  : confirms or <br/> edit then confirms <br/>the change data
+    activate ps
+    ps->> t  : update Trello <br/> with change data
+    t -->> ps  : response with success or error
+    ps->> x : update Xero <br/> with relevant data
+    Note right of x : may or maynot impliment this with this version <br/>
+    x -->> ps : response with success or error
+    bu ->> ps : tries to close app
+    ps ->> ps : append the session log <br/> results to log df <br/> fetched to data lake
+    ps -->> bu : shows the log to append to log dataframe <br/> and asks for confirmation
+    bu->> ps : confirms exit
+    deactivate ps
+
+</div></code></pre>
+<h4 id="frontend-sequence">Frontend Sequence</h4>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant bu as Backend User
+    participant ps as Python <br/> Server
+    participant dl as Google drive <br/> Data Lake
+    participant oc as observable <br/> client
+    participant fu as Frontend User
+    activate ps
+    bu ->> ps : saves changes <br/> and extis server
+    ps ->> dl : save dataframe <br/> as csv on <br/> google drive
+    dl -->> ps : response with success or error <br/> and server exists
+    deactivate ps
+    fu ->> oc : opens observable <br/> client
+        activate oc
+        dl ->>  oc : Observable client <br/> fetches data from google <br/> drive via integration
+        oc -->> fu : renders view of the data
+    loop user interacts with data
+        fu ->> oc : user interacts with data <br/> without modifying it
+        oc -->> fu : renders updated view of data
+        fu ->> oc : inputes and changes data
+        oc ->> oc : updates data
+        oc-->> fu : renders updated view of data
+        oc -->> dl : update datalake <br/> with altered data
+        fu ->> oc: press the save button
+        oc -->> dl : save data <br/> updated data as csv on <br/> google drive
+    end
+        deactivate oc
+    bu ->> ps : starts the server
+    activate ps
+    dl -->> ps : feed current data <br/> to python sever
+    deactivate ps
+
+</div></code></pre>
+
+</body>
+</html>

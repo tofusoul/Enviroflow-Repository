@@ -1,0 +1,44 @@
+# This workflow runs the new CLI pipeline at 10am, 1pm, and 6pm NZST (Mon-Fri)
+# See docs/dev_notes/github_actions_scheduling.md for details
+
+name: Run CLI Pipeline (Scheduled)
+
+on:
+  schedule:
+    - cron: '0 22 * * 0-4'  # 10am NZST (Mon-Fri)
+    - cron: '0 1 * * 0-4'   # 1pm NZST (Mon-Fri)
+    - cron: '0 6 * * 0-4'   # 6pm NZST (Mon-Fri)
+  workflow_dispatch:
+
+jobs:
+  run-cli-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install --no-interaction --no-root
+
+      - name: Run CLI pipeline
+        env:
+          GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          MOTHER_DUCK: ${{ secrets.MOTHER_DUCK }}
+          TRELLO_KEY: ${{ secrets.TRELLO_KEY }}
+          TRELLO_TOKEN: ${{ secrets.TRELLO_TOKEN }}
+          FLOAT_AUTH: ${{ secrets.FLOAT_AUTH }}
+          FLOAT_USER_AGENT: ${{ secrets.FLOAT_USER_AGENT }}
+        run: |
+          poetry run python -m enviroflow_app.cli.main run-all
+
+# To add secrets, use the GitHub CLI or web UI. See docs/dev_notes/github_actions_local_testing.md for local testing.
